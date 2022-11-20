@@ -10,3 +10,29 @@ class CompanyType(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.name
+
+class JobType(models.Model):
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    name=models.CharField(max_length=255)
+    image=models.ImageField(upload_to='jobtype/',blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
+
+
+
+class JobProvider(models.Model):
+    uuid = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    jobtype=models.ForeignKey(JobType,on_delete=models.CASCADE,related_name='jobtype')
+    name=models.CharField(max_length=255)
+    description=models.TextField()
+    location=models.CharField(max_length=255)
+    quantity=models.CharField(max_length=255)
+    clogo=models.ImageField(upload_to='clogo/',blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
