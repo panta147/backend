@@ -7,4 +7,4 @@ class RegisterAPIView(APIView):
     def post(self, request):
         data = request.data
         # print(request)
-        return Response({"message": data, 'status': 'ok', 'admin': "amrit"})
+        return Response({"message": data, 'status': 'ok', 'admin': "amritpanta"})
