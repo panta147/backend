@@ -9,12 +9,13 @@ admin.site.register(CompanyType,CompanyTypeAdmin)
 
 class JobTypeAdmin(admin.ModelAdmin):
     list_display=['uuid','name','created_at','updated_at']
-
 admin.site.register(JobType,JobTypeAdmin)
 
 
+class JobProviderAdmin(admin.ModelAdmin):
+    list_display=['uuid','name','jobtype','quantity','created_at','updated_at']
+admin.site.register(JobProvider,JobProviderAdmin)
 
-admin.site.register(JobProvider)
 
 
 
