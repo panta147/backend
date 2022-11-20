@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from job.models import JobProvider
-class JobPostSErializer(serializers.ModelSerializer):
-    clogo= serializers.SerializerMethodField()
+class JobGETSErializer(serializers.ModelSerializer):
+    # clogo= serializers.SerializerMethodField()
     class Meta:
         model=JobProvider
         fields='__all__'
@@ -14,7 +14,13 @@ class JobPostSErializer(serializers.ModelSerializer):
                 self.Meta.depth = 0
             else:
                 self.Meta.depth = 1
+                
     def get_clogo(self, obj):
         request = self.context.get('request')
         photo_url = obj.clogo.url
         return request.build_absolute_uri(photo_url)
+
+class JobPostSErializer(serializers.ModelSerializer):
+    class Meta:
+        model=JobProvider
+        fields='__all__'

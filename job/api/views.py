@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from job.models import CompanyType,JobType,JobProvider
 from rest_framework import status
-from .serializer import JobPostSErializer
+from .serializer import JobPostSErializer,JobGETSErializer
 import json
 class CompanyListAPIView(APIView):
     def get(self,request):
@@ -60,7 +60,7 @@ class JobListAPIView(APIView):
     def get(self,request):
         try:
             job=JobProvider.objects.all().order_by('?')[:9]
-            serializer=JobPostSErializer(job,many=True,context={"request": request})
+            serializer=JobGETSErializer(job,many=True,context={"request": request})
             return Response({"message":"list of job","data":serializer.data},status=status.HTTP_200_OK)
 
 
