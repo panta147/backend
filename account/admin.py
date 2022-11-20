@@ -12,10 +12,10 @@ class UserAdmin(admin.ModelAdmin):
     #         'fields': ( 'is_staff', "is_active")
     #     }),
     # )
-    list_display = ('email', 'is_staff', 'is_active',)
+    list_display = ('email', 'first_name', 'address','phone','userType')
     list_filter = ('email', 'is_staff', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password','first_name','date','address','phone','userType')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
