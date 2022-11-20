@@ -28,7 +28,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     profile = models.ImageField(upload_to="profile", null=True)
-    date = models.DateField(null=True)
+    date = models.CharField(max_length=255, null=True)
     email = models.EmailField(
         max_length=255, unique=True, verbose_name="Email Address")
     phone = models.CharField(max_length=20, default="", null=True)
