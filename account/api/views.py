@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from account.models import MyUser as User
 from rest_framework import status
-
+from django.contrib.auth import authenticate,login
 
 class RegisterAPIView(APIView):
     def post(self, request):
@@ -32,5 +32,37 @@ class RegisterAPIView(APIView):
             return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'status':'0',"message":"error",'error':str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class LoginAPIView(APIView):
+    def post(self, request):
+        try:
+            email = request.data["email"]
+            password = request.data['password']
+        except Exception:
+            return Response({"message": "Enter Email and password"}, status=400)
+
+        test = User.objects.filter(email=email).first()
+
+        if test is None:
+            return Response({'message': 'User Not Found.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(email=email, password=password)
+        if user:
+            response = {
+                     "status":'1',
+                          "message": "loggedIn successfully.",
+                "data":
+                    {
+    
+                        "uuid": user.uuid,
+                        "name":user.first_name,
+                        'userType':user.userType
+
+                    },
+           
+            }
+            return Response(response, status=200)
+        else:
+            return Response({'message': 'Invalid email or password'}, status=status.HTTP_400_BAD_REQUEST)
 
   
