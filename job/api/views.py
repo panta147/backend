@@ -79,3 +79,18 @@ class JobListDetailsAPIView(APIView):
 
         except Exception as e:
             return Response({"message":"error",'error':str(e)},status=status.HTTP_400_BAD_REQUEST)
+
+
+class JobSearch(APIView):
+    def get(self,request):
+        try: 
+            data=request.query_params.get('q')
+            s1=JobProvider.objects.filter(jobtype__name__icontains=data)
+            s2=JobProvider.objects.filter(name__icontains=data)
+            job=s1.union(s2)
+            serializer=JobGETSErializer(job,many=True,context={"request": request})
+            return Response({"message":"search","data":serializer.data},status=status.HTTP_200_OK)
+
+
+        except Exception as e:
+            return Response({"message":"error",'error':str(e)},status=status.HTTP_400_BAD_REQUEST)
