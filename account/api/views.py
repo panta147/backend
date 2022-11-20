@@ -10,13 +10,12 @@ class RegisterAPIView(APIView):
         try:
             data = request.data
             check_user_already_exist = User.objects.filter(email=data['email'])
-
             if check_user_already_exist:
                 return Response({'message': 'User with Email already exist'}, status=status.HTTP_400_BAD_REQUEST)
             user = User.objects.create_user(email=data['email'],
                                             password=data['password'],
                                             first_name=data['name'],
-                                            date=data['date'],
+                                            date=data.get('date','null'),
                                             address=data['address'],
                                             phone=data['phone'],
                                             companyName=data.get('companyName','null'),
@@ -40,17 +39,14 @@ class LoginAPIView(APIView):
             password = request.data['password']
         except Exception:
             return Response({"message": "Enter Email and password"}, status=400)
-
         test = User.objects.filter(email=email).first()
-
         if test is None:
             return Response({'message': 'User Not Found.'}, status=status.HTTP_400_BAD_REQUEST)
-
         user = authenticate(email=email, password=password)
         if user:
             response = {
-                     "status":'1',
-                          "message": "loggedIn successfully.",
+                "status":'1',
+                "message": "loggedIn successfully.",
                 "data":
                     {
     
