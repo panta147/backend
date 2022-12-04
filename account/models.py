@@ -33,6 +33,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         max_length=255, unique=True, verbose_name="Email Address")
     phone = models.CharField(max_length=20, default="", null=True)
     companyName = models.CharField(max_length=20, default="", null=True)
+    establish_date = models.CharField(max_length=20, default="", null=True)
+    education_background = models.CharField(
+        max_length=20, default="", null=True)
+    interest = models.CharField(max_length=20, default="", null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    image = models.ImageField(upload_to='profile/', blank=True, null=True)
     companyType = models.CharField(max_length=20, default="", null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
@@ -53,5 +60,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f'{self.first_name}'
+
 
 User = get_user_model()
