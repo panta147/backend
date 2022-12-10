@@ -31,16 +31,15 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     date = models.CharField(max_length=255, null=True)
     email = models.EmailField(
         max_length=255, unique=True, verbose_name="Email Address")
-    phone = models.CharField(max_length=20, default="", null=True)
-    companyName = models.CharField(max_length=20, default="", null=True)
-    establish_date = models.CharField(max_length=20, default="", null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    companyName = models.CharField(max_length=20, blank=True, null=True)
+    establish_date = models.CharField(max_length=20, blank=True, null=True)
     education_background = models.CharField(
-        max_length=20, default="", null=True)
-    interest = models.CharField(max_length=20, default="", null=True)
+        max_length=20, blank=True, null=True)
+    interest = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-    image = models.ImageField(upload_to='profile/', blank=True, null=True)
-    companyType = models.CharField(max_length=20, default="", null=True)
+    companyType = models.CharField(max_length=20, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     userType = models.BooleanField(default=True)
@@ -63,3 +62,16 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
 
 User = get_user_model()
+
+
+class Otp(models.Model):
+    email = models.EmailField()
+    otp = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "OTP"
+
+    def __str__(self):
+        return str(self.email)
